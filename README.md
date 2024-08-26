@@ -36,6 +36,10 @@ python main.py
 
 ## Additional Information
 
+### Scraping Process (Important)
+
+The scraper first collects basic details of hotels from the main hotel listing page. Based on the assignment's requirements, it then proceeds to scrape room details from each hotel's individual URL one by one. If you only need basic hotel information and not the room details, you can stop the scraper after it collects the initial hotel data.
+
 ### Custom Chrome Extension for Proxy Rotation
 
 This scraper uses a custom Chrome browser extension to rotate proxies. The reason for using this extension is that Selenium does not provide an option to update the browser proxy on the fly. Normally, you would have to quit the browser and open it again if you needed to change the proxy. However, by using a Chrome extension, we gain access to deeper APIs, allowing us to change the proxy without restarting the browser.
@@ -50,4 +54,4 @@ The data for each scrape is saved in the `data` folder with the date and time wh
 
 ### Customizing the Destination
 
-You can update the destination in the main script function to scrape hotels in different locations. Currently, the default destination is set to Tokyo, Japan.
+You can update the destination in the main script function to scrape hotels in different locations. Currently, the default destination is set to `Tokyo, Japan`.
