@@ -1,7 +1,3 @@
-Here's the updated README:
-
----
-
 # OTA Scraper
 
 **OTA**: Hotels.com  
@@ -36,7 +32,7 @@ python main.py
 
 ## Additional Information
 
-### Scraping Process (Important)
+### Scraping Process
 
 The scraper first collects basic details of hotels from the main hotel listing page. Based on the assignment's requirements, it then proceeds to scrape room details from each hotel's individual URL one by one. If you only need basic hotel information and not the room details, you can stop the scraper after it collects the initial hotel data.
 
@@ -50,8 +46,29 @@ The proxies used by the extension are stored in an array in the `./extensions/pr
 
 ### Data Storage
 
-The data for each scrape is saved in the `data` folder with the date and time when the scraper was run. The data is appended live during the scraping process, ensuring that no data is lost.
+The data for each scrape is saved in the `data` folder with the date and time when the scraper was run. The data is appended live during the scraping process, ensuring that no data is lost. Additionally, there are some sample data scrapes available in the `data` folder in CSV format.
+
+### Sample Data Format
+
+The sample data in the `data` folder includes the following fields:
+
+- `hotel_name`
+- `location`
+- `room_type`
+- `features`
+- `original_price`
+- `discounted_price`
+
+Format:
+
+```
+| hotel_name    | location    | room_type | features    | original_price    | discounted_price    |
+|---------------|-------------|-----------|-------------|-------------------|---------------------|
+| ...           | ...         | ...       | ...         | ...               | ...                 |
+|---------------|-------------|-----------|-------------|-------------------|---------------------|
+```
+
 
 ### Customizing the Destination
 
-You can update the destination in the main script function to scrape hotels in different locations. Currently, the default destination is set to `Tokyo, Japan`.
+You can update the destination in the main script function to scrape hotels in different locations. Currently, the default destination is set to Tokyo, Japan.
