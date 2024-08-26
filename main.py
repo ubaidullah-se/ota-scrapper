@@ -16,6 +16,9 @@ def setup_driver():
     # If you not want to images to load uncomment the following line
     # options.add_argument("--blink-settings=imagesEnabled=false")
 
+    # loading my custom extension, which I made for proxy rotation
+    options.add_argument("--load-extension=./extensions/proxy-rotater")
+
     service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service, options=options)
 
