@@ -10,7 +10,10 @@ import os
 
 
 def setup_driver():
-    """Sets up and returns a Chrome WebDriver with specified options."""
+    """
+    Sets up and returns a Chrome WebDriver.
+    :return: Configured Chrome WebDriver instance.
+    """
     options = webdriver.ChromeOptions()
     options.add_argument("--disable-blink-features=AutomationControlled")
     options.add_argument("--load-extension=./extensions/proxy-rotator")
@@ -20,11 +23,17 @@ def setup_driver():
 
 
 def scrape_hotel_urls(driver, main_url):
-    """Scrapes and returns a list of hotel URLs from the main hotel search page."""
+    """
+    Scrapes and returns a list of hotel URLs from the main hotel search page.
+    :param driver: WebDriver instance.
+    :param main_url: URL of the hotel search page.
+    :return: List of hotel URLs.
+    """
     driver.get(main_url)
     wait = WebDriverWait(driver, 100)
 
     try:
+        # Wait for the page to fully load and be interactive
         wait.until(
             EC.element_to_be_clickable(
                 (
@@ -33,6 +42,7 @@ def scrape_hotel_urls(driver, main_url):
                 )
             )
         )
+        # Scroll to load more hotels
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
         hotel_elements = driver.find_elements(
             By.CSS_SELECTOR, "a.uitk-card-link[data-stid=open-hotel-information]"
@@ -44,11 +54,17 @@ def scrape_hotel_urls(driver, main_url):
 
 
 def scrape_hotel_data(driver, hotel_url):
-    """Scrapes and returns data for a single hotel given its URL."""
+    """
+    Scrapes and returns data for a single hotel given its URL.
+    :param driver: WebDriver instance.
+    :param hotel_url: URL of the hotel page.
+    :return: List of dictionaries containing room details.
+    """
     driver.get(hotel_url)
     wait = WebDriverWait(driver, 100)
 
     try:
+        # Wait for the room list section to load
         wait.until(
             EC.presence_of_element_located(
                 (By.CSS_SELECTOR, "div[data-stid=section-room-list]")
@@ -69,7 +85,11 @@ def scrape_hotel_data(driver, hotel_url):
 
 
 def extract_hotel_name(driver):
-    """Extracts and returns the hotel name."""
+    """
+    Extracts and returns the hotel name from the current hotel page.
+    :param driver: WebDriver instance.
+    :return: Hotel name as a string.
+    """
     try:
         return driver.find_element(
             By.CSS_SELECTOR, "div[data-stid=standout-stays-card] h1.uitk-heading"
@@ -81,7 +101,11 @@ def extract_hotel_name(driver):
 
 
 def extract_rooms(driver):
-    """Extracts and returns a list of room data for the current hotel page."""
+    """
+    Extracts and returns a list of room data for the current hotel page.
+    :param driver: WebDriver instance.
+    :return: List of dictionaries containing room details.
+    """
     room_elements = driver.find_elements(
         By.CSS_SELECTOR, "div[data-stid=section-room-list]>div>div"
     )
@@ -105,7 +129,11 @@ def extract_rooms(driver):
 
 
 def extract_prices(room):
-    """Extracts and returns the original and discounted prices for a room."""
+    """
+    Extracts and returns the original and discounted prices for a room.
+    :param room: WebElement representing a room.
+    :return: Tuple containing original price and discounted price as strings.
+    """
     try:
         original_price = room.find_element(
             By.CSS_SELECTOR, "div[data-test-id=price-summary-message-line] del"
@@ -127,7 +155,11 @@ def extract_prices(room):
 
 
 def save_data(hotel_data, file_name):
-    """Saves hotel data to a CSV file."""
+    """
+    Saves hotel data to a CSV file.
+    :param hotel_data: List of dictionaries containing hotel data.
+    :param file_name: Name of the CSV file to save data.
+    """
     df = pd.DataFrame(hotel_data)
     df.to_csv(
         file_name,
@@ -139,6 +171,10 @@ def save_data(hotel_data, file_name):
 
 
 def main(destination="Tokyo Japan"):
+    """
+    Main function to scrape hotel data from the specified destination.
+    :param destination: Destination city or location for hotel search.
+    """
     print("Starting browser...")
     main_url = f"https://www.hotels.com/Hotel-Search?destination={destination}"
 
