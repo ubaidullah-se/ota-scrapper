@@ -17,7 +17,7 @@ def setup_driver():
     # options.add_argument("--blink-settings=imagesEnabled=false")
 
     # loading my custom extension, which I made for proxy rotation
-    options.add_argument("--load-extension=./extensions/proxy-rotater")
+    options.add_argument("--load-extension=./extensions/proxy-rotator")
 
     service = Service(ChromeDriverManager().install())
     driver = webdriver.Chrome(service=service, options=options)
@@ -121,9 +121,9 @@ def scrape_hotel_data(driver, hotel_url):
     return rooms
 
 
-def main():
+def main(destination=""):
     print("starting browser...")
-    main_url = "https://www.hotels.com/Hotel-Search?destination=Japan"
+    main_url = f"https://www.hotels.com/Hotel-Search?destination={destination}"
 
     driver = setup_driver()
     try:
@@ -137,7 +137,6 @@ def main():
 
     file_name = f"data/{datetime.now()}.csv"
     for index, hotel_url in enumerate(hotel_urls):
-        driver = setup_driver()
         try:
             print("scrapping hotel no", index + 1)
             hotel_data = scrape_hotel_data(driver, hotel_url)
@@ -158,4 +157,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    main(destination="Tokyo Japan")

@@ -21,6 +21,9 @@ const proxies = [
   "5.59.250.185:6883",
 ];
 
+const proxyUsername = "ccpxjgjt";
+const proxyPassword = "gxc7om4wg0tl";
+
 // Set the proxy settings for Chrome
 function setProxy(proxyIP, proxyPort, proxyUsername, proxyPassword) {
   // Create a proxy rule
@@ -67,7 +70,7 @@ function rotateProxy() {
   currentProxyIndex = (currentProxyIndex + 1) % proxies.length;
   let [proxyIP, proxyPort] = proxy.split(":");
 
-  setProxy(proxyIP, proxyPort, "ccpxjgjt", "gxc7om4wg0tl");
+  setProxy(proxyIP, proxyPort, proxyUsername, proxyPassword);
 }
 
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
